@@ -2,11 +2,13 @@
 
 namespace App\Form;
 
+use App\Entity\Departements;
 use App\Entity\Expediteurs;
 use App\Repository\DepartementsRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,6 +20,7 @@ class FormType extends AbstractType
      * @var DepartementsRepository
      */
     private $repository;
+
 
     public function __construct(DepartementsRepository $repository){
         $this->repository=$repository;
@@ -34,10 +37,10 @@ class FormType extends AbstractType
             ->add('nom',TextType::class)
             ->add('mail',EmailType::class)
             ->add('message',TextAreaType::class)
-            ->add('departement', ChoiceType::class,[
-                'choices'=> $this->getChoices()
-            ])
-        ;
+            ->add('departement', EntityType::class,[
+                'class'=>Departements::class,
+                'choice_label'=>'title'
+            ]);
     }
 
     /**
@@ -57,7 +60,7 @@ class FormType extends AbstractType
     public function  getChoices(){
         $choices = $this->repository->findAll();
         $temp =[];
-        $output =[];
+        $output = [];
         $i=1;
         foreach ($choices as $k){
            $temp[$i]=$k->getTitle();

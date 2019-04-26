@@ -9,6 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Expediteurs
 {
+
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -50,6 +52,7 @@ class Expediteurs
     private $message;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Departements::class", inversedBy="id")
      * @ORM\Column(type="string", length=3)
      */
     private $departement;
@@ -112,9 +115,9 @@ class Expediteurs
         return $this->departement;
     }
 
-    public function setDepartement(string $departement): self
+    public function setDepartement(Departements $departement): self
     {
-        $this->departement = $departement;
+        $this->departement = $departement->getId();
 
         return $this;
     }

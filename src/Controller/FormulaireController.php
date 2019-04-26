@@ -52,13 +52,15 @@ class FormulaireController extends AbstractController {
 
         $form = $this->createForm(FormType::class, $expediteur);
         $form->handleRequest($request);
-
+        dump($request);
         if($form->isSubmitted() && $form->isValid()){
+            dump($request);
             $this->em->persist($expediteur);
             $this->em->flush();
-            $this->addFlash('success','Votre formulaire à été envoyé avec succés' );
-            $departement= $this->Drepository->find($expediteur->getDepartement());
+            $departement = $this->Drepository->find($expediteur->getDepartement());
             $notification->notify($expediteur,$departement);
+            $this->addFlash('success','Votre formulaire à été envoyé avec succés' );
+
         }
 
 

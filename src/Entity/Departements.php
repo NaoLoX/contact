@@ -12,6 +12,7 @@ class Departements
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
+     * @ORM\OneToMany(targetEntity=Expediteurs::class, cascade={"persist", "remove"}, mappedBy="departement")
      * @ORM\Column(type="integer")
      */
     private $id;
