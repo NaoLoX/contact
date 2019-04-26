@@ -40,6 +40,9 @@ class FormType extends AbstractType
         ;
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -48,6 +51,7 @@ class FormType extends AbstractType
     }
 
     /**
+     * Fonction qui permet de génerer la liste déroulante dynamiquement
      * @return array
      */
     public function  getChoices(){
